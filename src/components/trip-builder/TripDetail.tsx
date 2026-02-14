@@ -97,7 +97,7 @@ const TripDetail = ({ trip, onBack, onSwitchTrip }: TripDetailProps) => {
             onClick={() => setPanelOpen(!panelOpen)}
             className="w-full flex items-center justify-between p-4 hover:bg-accent transition-colors"
           >
-            <span className="font-heading font-bold text-navy-dark text-sm">Trip Details</span>
+            <span className="font-heading font-bold text-navy-dark text-sm">Trip Description</span>
             {panelOpen ? <ChevronUp size={16} /> : <ChevronDown size={16} />}
           </button>
           <AnimatePresence>

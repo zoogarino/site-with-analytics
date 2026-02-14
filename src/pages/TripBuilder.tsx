@@ -1,4 +1,5 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
+import { useSearchParams } from "react-router-dom";
 import {
   ZoomIn,
   ZoomOut,
@@ -19,7 +20,10 @@ import { Trip } from "@/data/trips";
 type ActiveTab = "browse" | "create";
 
 const TripBuilder = () => {
-  const [activeTab, setActiveTab] = useState<ActiveTab>("browse");
+  const [searchParams] = useSearchParams();
+  const [activeTab, setActiveTab] = useState<ActiveTab>(
+    searchParams.get("tab") === "browse" ? "browse" : "browse"
+  );
   const [selectedTrip, setSelectedTrip] = useState<Trip | null>(null);
   const [sidebarOpen, setSidebarOpen] = useState(false);
 

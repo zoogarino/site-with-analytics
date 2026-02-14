@@ -13,17 +13,17 @@ const planYourTripItems = [
   },
   {
     label: "Pre-Built Trips",
-    subtitle: "6 expert itineraries",
-    href: "/#explore",
+    subtitle: "5 expert itineraries",
+    href: "/trips?tab=browse",
     icon: Route,
-    iconBg: "bg-accent",
+    iconBg: "bg-ochre",
   },
   {
     label: "Travel Advice",
     subtitle: "Essential tips & guides",
-    href: "/blog",
+    href: "/#travel-advice",
     icon: Info,
-    iconBg: "bg-green-500",
+    iconBg: "bg-success",
   },
 ];
 
