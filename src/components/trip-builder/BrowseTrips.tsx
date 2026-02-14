@@ -1,3 +1,4 @@
+import { useState } from "react";
 import { MapPin, Clock, Flag, ArrowRight } from "lucide-react";
 import { motion } from "framer-motion";
 import { trips, Trip } from "@/data/trips";
@@ -6,8 +7,25 @@ interface BrowseTripsProps {
   onSelectTrip: (trip: Trip) => void;
 }
 
-const BrowseTrips = ({ onSelectTrip }: BrowseTripsProps) => (
+const BrowseTrips = ({ onSelectTrip }: BrowseTripsProps) => {
+  const [filter, setFilter] = useState("pocket-guide");
+
+  return (
   <div className="p-6 space-y-4">
+    {/* Filter Dropdown */}
+    <div>
+      <label className="block text-sm font-semibold text-foreground/70 mb-2">Show Trips</label>
+      <select
+        value={filter}
+        onChange={(e) => setFilter(e.target.value)}
+        className="w-full px-4 py-3 border-2 border-border rounded-lg focus:outline-none focus:border-primary bg-card font-semibold text-navy-dark text-sm"
+      >
+        <option value="pocket-guide">Pocket Guide Trips ({trips.length})</option>
+        <option value="my-trips">My Trips (0)</option>
+        <option value="all">All Trips ({trips.length})</option>
+      </select>
+    </div>
+
     <h3 className="text-lg font-heading font-bold text-navy-dark">
       Expert-Curated Routes
     </h3>
@@ -44,6 +62,7 @@ const BrowseTrips = ({ onSelectTrip }: BrowseTripsProps) => (
       ))}
     </div>
   </div>
-);
+  );
+};
 
 export default BrowseTrips;
