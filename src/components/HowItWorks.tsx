@@ -6,22 +6,19 @@ const steps = [
     icon: Map,
     number: 1,
     title: "Plan Your Route",
-    description:
-      "Choose a pre-built itinerary or create your own custom route using our interactive trip builder.",
+    description: "Choose a pre-built itinerary or create your own custom route using our interactive trip builder.",
   },
   {
     icon: Truck,
     number: 2,
     title: "Book Your Essentials",
-    description:
-      "Request quotes for vehicles and accommodations directly through our platform from verified partners.",
+    description: "Request quotes for vehicles and accommodations directly through our platform from verified partners.",
   },
   {
     icon: Smartphone,
     number: 3,
-    title: "Download for Offline",
-    description:
-      "Get the mobile app and download your trip, maps, and guides for offline access during your journey.",
+    title: "Download the App",
+    description: "Get the mobile app and download your trip, maps, and guides for offline access during your journey.",
   },
   {
     icon: MapPin,
@@ -65,12 +62,8 @@ const HowItWorks = () => (
             <div className="flex justify-center mb-3">
               <step.icon size={28} className="text-primary/60" />
             </div>
-            <h3 className="text-xl font-heading font-bold text-navy-dark mb-2">
-              {step.title}
-            </h3>
-            <p className="text-muted-foreground leading-relaxed">
-              {step.description}
-            </p>
+            <h3 className="text-xl font-heading font-bold text-navy-dark mb-2">{step.title}</h3>
+            <p className="text-muted-foreground leading-relaxed">{step.description}</p>
           </motion.div>
         ))}
       </div>
