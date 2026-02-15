@@ -6,10 +6,7 @@ const HeroSection = () => {
   return (
     <section className="relative min-h-screen flex items-center overflow-hidden">
       {/* Background image */}
-      <div
-        className="absolute inset-0 bg-cover bg-center"
-        style={{ backgroundImage: `url(${heroImage})` }}
-      />
+      <div className="absolute inset-0 bg-cover bg-center" style={{ backgroundImage: `url(${heroImage})` }} />
       {/* Dark gradient overlay */}
       <div className="absolute inset-0 bg-gradient-to-r from-black/70 via-black/40 to-transparent" />
 
@@ -24,8 +21,8 @@ const HeroSection = () => {
             Discover Namibia Like Never Before
           </h1>
           <p className="text-lg sm:text-xl text-gray-100 mb-10 leading-relaxed max-w-xl">
-            Your passport to the wonders of this breathtaking land. Plan routes,
-            book vehicles, and explore 50+ destinations with confidence.
+            Your passport to the wonders of this breathtaking land. Plan routes, book vehicles, and explore Namibia with
+            confidence.
           </p>
           <div className="flex flex-col sm:flex-row gap-4">
             <button className="bg-primary hover:bg-primary-dark text-primary-foreground font-semibold text-lg px-8 py-4 rounded-lg transition-colors shadow-lg">
