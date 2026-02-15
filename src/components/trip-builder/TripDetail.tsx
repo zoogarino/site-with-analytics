@@ -32,7 +32,9 @@ const TripDetail = ({ trip, onBack, onSwitchTrip }: TripDetailProps) => {
             <ArrowLeft size={18} />
           </button>
           <div>
-            <h3 className="font-heading font-bold text-navy-dark text-lg leading-tight">{trip.name}</h3>
+            <h3 className="font-heading font-bold text-navy-dark text-lg leading-tight">
+              {trip.name}
+            </h3>
             <p className="text-xs text-muted-foreground mt-1">Expert-curated itinerary</p>
           </div>
         </div>
@@ -115,7 +117,8 @@ const TripDetail = ({ trip, onBack, onSwitchTrip }: TripDetailProps) => {
                   <p>{trip.description}</p>
                   <div className="bg-accent rounded-lg p-3 text-xs">
                     <p>
-                      🏕️ <strong>ACCOMMODATION:</strong> testing testing
+                      🏕️ <strong>ACCOMMODATION:</strong> All route descriptions exclude specific accommodation
+                      recommendations. Contact Pocket Guide Namibia for personalized booking assistance.
                     </p>
                   </div>
                 </div>
@@ -135,8 +138,16 @@ const TripDetail = ({ trip, onBack, onSwitchTrip }: TripDetailProps) => {
         }}
         currentTripId={trip.id}
       />
-      <ContactModal open={showContact} onClose={() => setShowContact(false)} tripName={trip.name} />
-      <CopyTripModal open={showCopy} onClose={() => setShowCopy(false)} tripName={trip.name} />
+      <ContactModal
+        open={showContact}
+        onClose={() => setShowContact(false)}
+        tripName={trip.name}
+      />
+      <CopyTripModal
+        open={showCopy}
+        onClose={() => setShowCopy(false)}
+        tripName={trip.name}
+      />
     </>
   );
 };
