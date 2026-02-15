@@ -16,7 +16,7 @@ const cards = [
     gradient: "from-ochre to-terracotta",
     icon: MapPin,
     iconBg: "bg-ochre/20 text-ochre",
-    title: "Explore 50+ Destinations",
+    title: "Explore 250+ Destinations",
     description:
       "Discover accommodations, activities, fuel stations, landmarks, and essential services across Namibia.",
     link: "Explore Map",
@@ -27,8 +27,7 @@ const cards = [
     icon: Truck,
     iconBg: "bg-foreground/10 text-foreground/70",
     title: "Book Your 4x4 Adventure",
-    description:
-      "Get quotes from trusted Namibian rental companies. Choose from 2-seaters to fully-equipped camping vehicles.",
+    description: "Get quotes from trusted Namibian rental companies. We'll source the perfect vehicle for your trip.",
     link: "Get a Quote",
     linkColor: "text-foreground/70",
   },
