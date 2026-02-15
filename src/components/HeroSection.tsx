@@ -1,8 +1,10 @@
 import { ChevronDown } from "lucide-react";
 import { motion } from "framer-motion";
+import { useNavigate } from "react-router-dom";
 import heroImage from "@/assets/hero-namibia.jpg";
 
 const HeroSection = () => {
+  const navigate = useNavigate();
   return (
     <section className="relative min-h-screen flex items-center overflow-hidden">
       {/* Background image */}
@@ -25,7 +27,7 @@ const HeroSection = () => {
             confidence.
           </p>
           <div className="flex flex-col sm:flex-row gap-4">
-            <button className="bg-primary hover:bg-primary-dark text-primary-foreground font-semibold text-lg px-8 py-4 rounded-lg transition-colors shadow-lg">
+            <button onClick={() => navigate("/trips")} className="bg-primary hover:bg-primary-dark text-primary-foreground font-semibold text-lg px-8 py-4 rounded-lg transition-colors shadow-lg">
               Start Planning Your Trip
             </button>
             <button className="border-2 border-white text-white hover:bg-white/10 font-semibold text-lg px-8 py-4 rounded-lg transition-colors">
