@@ -6,7 +6,7 @@ const cards = [
     gradient: "from-primary to-primary-dark",
     icon: Map,
     iconBg: "bg-primary/20 text-primary",
-    title: "Build Your Custom Route",
+    title: "Design Your Very Own Adventure",
     description:
       "Choose from 5 professionally curated itineraries or create your own. See distances, driving times, and suggested stops along the way.",
     link: "Explore Trips",
