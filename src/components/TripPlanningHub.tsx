@@ -8,7 +8,7 @@ const cards = [
     iconBg: "bg-primary/20 text-primary",
     title: "Build Your Custom Route",
     description:
-      "Choose from 6 curated itineraries or create your own. See distances, driving times, and suggested stops along the way.",
+      "Choose from 5 professionally curated itineraries or create your own. See distances, driving times, and suggested stops along the way.",
     link: "Explore Trips",
     linkColor: "text-primary",
   },
@@ -38,12 +38,10 @@ const TripPlanningHub = () => (
   <section className="section-padding bg-card">
     <div className="section-container">
       <div className="text-center mb-16">
-        <h2 className="text-3xl sm:text-4xl font-heading font-bold text-navy-dark mb-4">
-          Plan Your Perfect Adventure
-        </h2>
+        <h2 className="text-3xl sm:text-4xl font-heading font-bold text-navy-dark mb-4">Plan Your Perfect Adventure</h2>
         <p className="text-muted-foreground max-w-2xl mx-auto text-lg">
-          Everything you need to explore Namibia with confidence. Build custom
-          routes, discover destinations, and book your journey—all in one place.
+          Everything you need to explore Namibia with confidence. Build custom routes, discover destinations, and book
+          your journey—all in one place.
         </p>
       </div>
 
@@ -59,15 +57,13 @@ const TripPlanningHub = () => (
           >
             <div className={`h-48 bg-gradient-to-br ${card.gradient}`} />
             <div className="p-6">
-              <div className={`w-12 h-12 rounded-full ${card.iconBg} flex items-center justify-center -mt-12 mb-4 border-4 border-card`}>
+              <div
+                className={`w-12 h-12 rounded-full ${card.iconBg} flex items-center justify-center -mt-12 mb-4 border-4 border-card`}
+              >
                 <card.icon size={22} />
               </div>
-              <h3 className="text-2xl font-heading font-bold text-navy-dark mb-3">
-                {card.title}
-              </h3>
-              <p className="text-muted-foreground mb-4 leading-relaxed">
-                {card.description}
-              </p>
+              <h3 className="text-2xl font-heading font-bold text-navy-dark mb-3">{card.title}</h3>
+              <p className="text-muted-foreground mb-4 leading-relaxed">{card.description}</p>
               <a
                 href="#"
                 className={`inline-flex items-center gap-1 font-semibold ${card.linkColor} hover:gap-2 transition-all`}
