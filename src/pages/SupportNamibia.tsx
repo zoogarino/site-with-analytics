@@ -1,8 +1,7 @@
 import { ExternalLink, ArrowRight } from "lucide-react";
 import { motion } from "framer-motion";
 import { useNavigate } from "react-router-dom";
-import Navbar from "@/components/Navbar";
-import Footer from "@/components/Footer";
+import Layout from "@/components/Layout";
 
 const orgs = [
   {
@@ -32,9 +31,9 @@ const orgs = [
 ];
 
 const stats = [
-  { value: "700+", label: "Travelers Supporting Change" },
-  { value: "$42,000+", label: "Donated Since 2020" },
-  { value: "3", label: "Partner Organizations" },
+  { label: "Students Supported", value: "1,200+" },
+  { label: "Desert Elephants Protected", value: "150+" },
+  { label: "Children in OVC Care", value: "80+" },
 ];
 
 const fadeUp = {
@@ -48,14 +47,12 @@ const SupportNamibiaPage = () => {
   const navigate = useNavigate();
 
   return (
-    <div className="min-h-screen">
-      <Navbar />
-
+    <Layout>
       {/* Hero */}
-      <section className="bg-gradient-to-br from-navy-dark to-gray-900 text-white pt-32 pb-20">
+      <section className="bg-gradient-to-br from-navy-dark to-foreground/90 text-primary-foreground py-20">
         <motion.div {...fadeUp} className="max-w-4xl mx-auto px-6 text-center">
           <h1 className="text-5xl md:text-6xl font-heading font-bold mb-6">Travel With Purpose</h1>
-          <p className="text-xl md:text-2xl text-gray-300">
+          <p className="text-xl md:text-2xl text-primary-foreground/70">
             Every journey you take helps build a better future for Namibia
           </p>
         </motion.div>
@@ -155,13 +152,11 @@ const SupportNamibiaPage = () => {
                 transition={{ delay: i * 0.15, duration: 0.6 }}
                 className="group relative bg-card rounded-2xl overflow-hidden shadow-xl hover:shadow-2xl hover:-translate-y-1 transition-all duration-300"
               >
-                {/* Image area */}
                 <div className="relative h-80 overflow-hidden">
                   <div className={`absolute inset-0 bg-gradient-to-br ${org.gradient}`} />
-
-                  <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/40 to-transparent" />
+                  <div className="absolute inset-0 bg-gradient-to-t from-foreground/80 via-foreground/40 to-transparent" />
                   <div className="absolute bottom-0 left-0 right-0 p-6">
-                    <h3 className="text-2xl font-heading font-bold text-white">{org.name}</h3>
+                    <h3 className="text-2xl font-heading font-bold text-primary-foreground">{org.name}</h3>
                   </div>
                   <a
                     href={org.url}
@@ -173,7 +168,6 @@ const SupportNamibiaPage = () => {
                   </a>
                 </div>
 
-                {/* Content */}
                 <div className="p-6">
                   <p className="text-muted-foreground mb-4 leading-relaxed">{org.description}</p>
                   <div className="border-t border-border pt-4">
@@ -199,8 +193,6 @@ const SupportNamibiaPage = () => {
         </div>
       </section>
 
-      {/* Impact Stats */}
-
       {/* CTA */}
       <section className="bg-card py-20">
         <motion.div {...fadeUp} className="max-w-4xl mx-auto px-6 text-center">
@@ -225,9 +217,7 @@ const SupportNamibiaPage = () => {
           <p className="text-sm text-muted-foreground mt-8">Every booking helps build a better future for Namibia</p>
         </motion.div>
       </section>
-
-      <Footer />
-    </div>
+    </Layout>
   );
 };
 

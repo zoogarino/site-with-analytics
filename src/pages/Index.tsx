@@ -1,4 +1,4 @@
-import Navbar from "@/components/Navbar";
+import Layout from "@/components/Layout";
 import HeroSection from "@/components/HeroSection";
 import TripPlanningHub from "@/components/TripPlanningHub";
 import PreBuiltTrips from "@/components/PreBuiltTrips";
@@ -8,11 +8,9 @@ import SupportNamibia from "@/components/SupportNamibia";
 import HowItWorks from "@/components/HowItWorks";
 import PremiumTeaser from "@/components/PremiumTeaser";
 import BlogPreview from "@/components/BlogPreview";
-import Footer from "@/components/Footer";
 
 const Index = () => (
-  <div className="min-h-screen" id="main-content">
-    <Navbar />
+  <Layout className="bg-background" fullBleed>
     <HeroSection />
     <TripPlanningHub />
     <PreBuiltTrips />
@@ -22,8 +20,7 @@ const Index = () => (
     <SupportNamibia />
     <HowItWorks />
     <BlogPreview />
-    <Footer />
-  </div>
+  </Layout>
 );
 
 export default Index;

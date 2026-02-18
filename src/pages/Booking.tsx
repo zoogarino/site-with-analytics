@@ -1,8 +1,7 @@
 import { useState } from "react";
 import { MapPin, Calendar, Users, Mail, Phone, CheckSquare, Loader2 } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
-import Navbar from "@/components/Navbar";
-import Footer from "@/components/Footer";
+import Layout from "@/components/Layout";
 
 const vehicleTypes = [
   { emoji: "🚙", name: "4x4 (2 Seats)", popular: false },
@@ -28,138 +27,135 @@ const Booking = () => {
   };
 
   return (
-    <div className="min-h-screen bg-muted">
-      <Navbar />
-      <div className="pt-[72px]">
-        <div className="section-padding">
-          <div className="section-container">
-            {/* Header */}
-            <div className="text-center mb-12">
-              <h1 className="text-3xl sm:text-4xl font-heading font-bold text-navy-dark mb-4">
-                Book Your Perfect 4x4 Adventure Vehicle
-              </h1>
-              <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
-                Choose from trusted Namibian rental companies. Get quotes for
-                2-seaters to fully-equipped camping vehicles.
+    <Layout className="bg-muted">
+      <div className="section-padding">
+        <div className="section-container">
+          {/* Header */}
+          <div className="text-center mb-12">
+            <h1 className="text-3xl sm:text-4xl font-heading font-bold text-navy-dark mb-4">
+              Book Your Perfect 4x4 Adventure Vehicle
+            </h1>
+            <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
+              Choose from trusted Namibian rental companies. Get quotes for
+              2-seaters to fully-equipped camping vehicles.
+            </p>
+          </div>
+
+          {/* Vehicle Selector */}
+          <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mb-12">
+            {vehicleTypes.map((v, i) => (
+              <motion.button
+                key={v.name}
+                whileHover={{ scale: 1.02 }}
+                whileTap={{ scale: 0.98 }}
+                onClick={() => setSelectedVehicle(i)}
+                className={`relative p-6 rounded-xl border-2 transition-all text-center ${
+                  selectedVehicle === i
+                    ? "border-primary bg-accent shadow-md"
+                    : v.popular
+                    ? "border-primary/30 bg-card hover:border-primary"
+                    : "border-border bg-card hover:border-primary"
+                }`}
+              >
+                {v.popular && (
+                  <span className="absolute top-2 right-2 bg-primary text-primary-foreground text-xs font-bold px-2 py-0.5 rounded">
+                    Popular
+                  </span>
+                )}
+                <div className="text-4xl mb-2">{v.emoji}</div>
+                <div className="font-heading font-bold text-navy-dark text-sm">
+                  {v.name}
+                </div>
+              </motion.button>
+            ))}
+          </div>
+
+          {/* Booking Form */}
+          <form
+            onSubmit={handleSubmit}
+            className="bg-card rounded-xl shadow-lg p-6 sm:p-8 max-w-4xl mx-auto"
+          >
+            <div className="grid md:grid-cols-2 gap-8">
+              {/* Left - Trip Details */}
+              <div>
+                <h2 className="text-2xl font-heading font-bold text-navy-dark mb-6">
+                  Trip Details
+                </h2>
+                <div className="space-y-5">
+                  <InputField icon={MapPin} label="Pick-up Location" placeholder="e.g., Windhoek Airport" />
+                  <InputField icon={MapPin} label="Drop-off Location" placeholder="e.g., Windhoek Airport" />
+                  <div className="grid grid-cols-2 gap-4">
+                    <InputField icon={Calendar} label="Pick-up Date" placeholder="Select date" type="date" />
+                    <InputField icon={Calendar} label="Drop-off Date" placeholder="Select date" type="date" />
+                  </div>
+                  <div>
+                    <label className="block text-sm font-semibold text-foreground/70 mb-2">
+                      Participants
+                    </label>
+                    <div className="relative">
+                      <Users size={16} className="absolute left-3 top-1/2 -translate-y-1/2 text-muted-foreground" />
+                      <select className="w-full border border-border rounded-lg pl-10 pr-4 py-3 text-sm focus:outline-none focus:ring-2 focus:ring-ring bg-card text-foreground appearance-none">
+                        {[1, 2, 3, 4, "5+"].map((n) => (
+                          <option key={n} value={n}>{n} {typeof n === "number" && n === 1 ? "person" : "people"}</option>
+                        ))}
+                      </select>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              {/* Right - Personal Details */}
+              <div>
+                <h2 className="text-2xl font-heading font-bold text-navy-dark mb-6">
+                  Your Details
+                </h2>
+                <div className="space-y-5">
+                  <div className="grid grid-cols-2 gap-4">
+                    <InputField label="First Name" placeholder="John" />
+                    <InputField label="Last Name" placeholder="Doe" />
+                  </div>
+                  <InputField icon={Mail} label="Email" placeholder="you@email.com" type="email" />
+                  <InputField icon={Phone} label="Phone" placeholder="+264 ..." type="tel" />
+                  <div className="space-y-3">
+                    <Checkbox checked={camping} onChange={setCamping} label="Camping equipment required" />
+                    <Checkbox checked={namibianOnly} onChange={setNamibianOnly} label="Only Namibian rentals" />
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            {/* Additional Comments */}
+            <div className="mt-6">
+              <label className="block text-sm font-semibold text-foreground/70 mb-2">
+                Additional Requests
+              </label>
+              <textarea
+                rows={3}
+                placeholder="e.g., second driver, insurance needs, child seat requirements..."
+                className="w-full border border-border rounded-lg px-4 py-3 text-sm focus:outline-none focus:ring-2 focus:ring-ring bg-card text-foreground placeholder:text-muted-foreground resize-none"
+              />
+            </div>
+
+            {/* Submit */}
+            <div className="mt-8">
+              <button
+                type="submit"
+                disabled={submitting}
+                className="w-full bg-primary hover:bg-primary-dark text-primary-foreground font-bold text-lg py-4 rounded-lg transition-colors shadow-lg disabled:opacity-60 flex items-center justify-center gap-2"
+              >
+                {submitting ? (
+                  <>
+                    <Loader2 size={20} className="animate-spin" /> Submitting...
+                  </>
+                ) : (
+                  "Submit Inquiry"
+                )}
+              </button>
+              <p className="text-center text-sm text-muted-foreground mt-3">
+                You'll receive quotes from rental partners within 24-48 hours
               </p>
             </div>
-
-            {/* Vehicle Selector */}
-            <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mb-12">
-              {vehicleTypes.map((v, i) => (
-                <motion.button
-                  key={v.name}
-                  whileHover={{ scale: 1.02 }}
-                  whileTap={{ scale: 0.98 }}
-                  onClick={() => setSelectedVehicle(i)}
-                  className={`relative p-6 rounded-xl border-2 transition-all text-center ${
-                    selectedVehicle === i
-                      ? "border-primary bg-accent shadow-md"
-                      : v.popular
-                      ? "border-primary/30 bg-card hover:border-primary"
-                      : "border-border bg-card hover:border-primary"
-                  }`}
-                >
-                  {v.popular && (
-                    <span className="absolute top-2 right-2 bg-primary text-primary-foreground text-xs font-bold px-2 py-0.5 rounded">
-                      Popular
-                    </span>
-                  )}
-                  <div className="text-4xl mb-2">{v.emoji}</div>
-                  <div className="font-heading font-bold text-navy-dark text-sm">
-                    {v.name}
-                  </div>
-                </motion.button>
-              ))}
-            </div>
-
-            {/* Booking Form */}
-            <form
-              onSubmit={handleSubmit}
-              className="bg-card rounded-xl shadow-lg p-6 sm:p-8 max-w-4xl mx-auto"
-            >
-              <div className="grid md:grid-cols-2 gap-8">
-                {/* Left - Trip Details */}
-                <div>
-                  <h2 className="text-2xl font-heading font-bold text-navy-dark mb-6">
-                    Trip Details
-                  </h2>
-                  <div className="space-y-5">
-                    <InputField icon={MapPin} label="Pick-up Location" placeholder="e.g., Windhoek Airport" />
-                    <InputField icon={MapPin} label="Drop-off Location" placeholder="e.g., Windhoek Airport" />
-                    <div className="grid grid-cols-2 gap-4">
-                      <InputField icon={Calendar} label="Pick-up Date" placeholder="Select date" type="date" />
-                      <InputField icon={Calendar} label="Drop-off Date" placeholder="Select date" type="date" />
-                    </div>
-                    <div>
-                      <label className="block text-sm font-semibold text-foreground/70 mb-2">
-                        Participants
-                      </label>
-                      <div className="relative">
-                        <Users size={16} className="absolute left-3 top-1/2 -translate-y-1/2 text-muted-foreground" />
-                        <select className="w-full border border-border rounded-lg pl-10 pr-4 py-3 text-sm focus:outline-none focus:ring-2 focus:ring-ring bg-card text-foreground appearance-none">
-                          {[1, 2, 3, 4, "5+"].map((n) => (
-                            <option key={n} value={n}>{n} {typeof n === "number" && n === 1 ? "person" : "people"}</option>
-                          ))}
-                        </select>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-
-                {/* Right - Personal Details */}
-                <div>
-                  <h2 className="text-2xl font-heading font-bold text-navy-dark mb-6">
-                    Your Details
-                  </h2>
-                  <div className="space-y-5">
-                    <div className="grid grid-cols-2 gap-4">
-                      <InputField label="First Name" placeholder="John" />
-                      <InputField label="Last Name" placeholder="Doe" />
-                    </div>
-                    <InputField icon={Mail} label="Email" placeholder="you@email.com" type="email" />
-                    <InputField icon={Phone} label="Phone" placeholder="+264 ..." type="tel" />
-                    <div className="space-y-3">
-                      <Checkbox checked={camping} onChange={setCamping} label="Camping equipment required" />
-                      <Checkbox checked={namibianOnly} onChange={setNamibianOnly} label="Only Namibian rentals" />
-                    </div>
-                  </div>
-                </div>
-              </div>
-
-              {/* Additional Comments */}
-              <div className="mt-6">
-                <label className="block text-sm font-semibold text-foreground/70 mb-2">
-                  Additional Requests
-                </label>
-                <textarea
-                  rows={3}
-                  placeholder="e.g., second driver, insurance needs, child seat requirements..."
-                  className="w-full border border-border rounded-lg px-4 py-3 text-sm focus:outline-none focus:ring-2 focus:ring-ring bg-card text-foreground placeholder:text-muted-foreground resize-none"
-                />
-              </div>
-
-              {/* Submit */}
-              <div className="mt-8">
-                <button
-                  type="submit"
-                  disabled={submitting}
-                  className="w-full bg-primary hover:bg-primary-dark text-primary-foreground font-bold text-lg py-4 rounded-lg transition-colors shadow-lg disabled:opacity-60 flex items-center justify-center gap-2"
-                >
-                  {submitting ? (
-                    <>
-                      <Loader2 size={20} className="animate-spin" /> Submitting...
-                    </>
-                  ) : (
-                    "Submit Inquiry"
-                  )}
-                </button>
-                <p className="text-center text-sm text-muted-foreground mt-3">
-                  You'll receive quotes from rental partners within 24-48 hours
-                </p>
-              </div>
-            </form>
-          </div>
+          </form>
         </div>
       </div>
 
@@ -206,9 +202,7 @@ const Booking = () => {
           </motion.div>
         )}
       </AnimatePresence>
-
-      <Footer />
-    </div>
+    </Layout>
   );
 };
 

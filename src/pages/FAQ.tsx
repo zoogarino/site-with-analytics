@@ -1,8 +1,7 @@
 import { useState } from "react";
 import { ChevronDown, ArrowRight } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
-import Navbar from "@/components/Navbar";
-import Footer from "@/components/Footer";
+import Layout from "@/components/Layout";
 
 const categories = [
   {
@@ -42,85 +41,81 @@ const FAQ = () => {
   const [openFaq, setOpenFaq] = useState<string | null>(null);
 
   return (
-    <div className="min-h-screen bg-muted">
-      <Navbar />
-      <div className="pt-[72px]">
-        <div className="section-padding">
-          <div className="section-container max-w-4xl">
-            {/* Header */}
-            <div className="text-center mb-12">
-              <h1 className="text-3xl sm:text-4xl font-heading font-bold text-navy-dark mb-4">
-                Frequently Asked Questions
-              </h1>
-            </div>
+    <Layout className="bg-muted">
+      <div className="section-padding">
+        <div className="section-container max-w-4xl">
+          {/* Header */}
+          <div className="text-center mb-12">
+            <h1 className="text-3xl sm:text-4xl font-heading font-bold text-navy-dark mb-4">
+              Frequently Asked Questions
+            </h1>
+          </div>
 
-            {/* Category Tabs */}
-            <div className="flex flex-wrap gap-2 mb-10 justify-center">
-              {categories.map((cat, i) => (
-                <button
-                  key={cat.name}
-                  onClick={() => { setActiveTab(i); setOpenFaq(null); }}
-                  className={`px-4 py-2 rounded-lg text-sm font-medium transition-colors ${
-                    activeTab === i
-                      ? "bg-primary text-primary-foreground"
-                      : "bg-card text-muted-foreground hover:text-primary border border-border"
-                  }`}
-                >
-                  {cat.name}
-                </button>
-              ))}
-            </div>
-
-            {/* FAQ Items */}
-            <div className="space-y-3">
-              {categories[activeTab].faqs.map((faq) => {
-                const isOpen = openFaq === faq.q;
-                return (
-                  <div key={faq.q} className="bg-card rounded-lg border border-border overflow-hidden">
-                    <button
-                      onClick={() => setOpenFaq(isOpen ? null : faq.q)}
-                      className="w-full flex items-center justify-between p-5 text-left"
-                    >
-                      <span className="font-semibold text-navy-dark pr-4">{faq.q}</span>
-                      <ChevronDown
-                        size={18}
-                        className={`text-muted-foreground flex-shrink-0 transition-transform ${
-                          isOpen ? "rotate-180" : ""
-                        }`}
-                      />
-                    </button>
-                    <AnimatePresence>
-                      {isOpen && (
-                        <motion.div
-                          initial={{ height: 0, opacity: 0 }}
-                          animate={{ height: "auto", opacity: 1 }}
-                          exit={{ height: 0, opacity: 0 }}
-                          transition={{ duration: 0.2 }}
-                          className="overflow-hidden"
-                        >
-                          <p className="px-5 pb-5 text-muted-foreground leading-relaxed">
-                            {faq.a}
-                          </p>
-                        </motion.div>
-                      )}
-                    </AnimatePresence>
-                  </div>
-                );
-              })}
-            </div>
-
-            {/* Bottom CTA */}
-            <div className="text-center mt-12">
-              <p className="text-muted-foreground mb-4">Still have questions?</p>
-              <button className="inline-flex items-center gap-2 bg-primary hover:bg-primary-dark text-primary-foreground font-semibold px-6 py-3 rounded-lg transition-colors">
-                Contact Us <ArrowRight size={16} />
+          {/* Category Tabs */}
+          <div className="flex flex-wrap gap-2 mb-10 justify-center">
+            {categories.map((cat, i) => (
+              <button
+                key={cat.name}
+                onClick={() => { setActiveTab(i); setOpenFaq(null); }}
+                className={`px-4 py-2 rounded-lg text-sm font-medium transition-colors ${
+                  activeTab === i
+                    ? "bg-primary text-primary-foreground"
+                    : "bg-card text-muted-foreground hover:text-primary border border-border"
+                }`}
+              >
+                {cat.name}
               </button>
-            </div>
+            ))}
+          </div>
+
+          {/* FAQ Items */}
+          <div className="space-y-3">
+            {categories[activeTab].faqs.map((faq) => {
+              const isOpen = openFaq === faq.q;
+              return (
+                <div key={faq.q} className="bg-card rounded-lg border border-border overflow-hidden">
+                  <button
+                    onClick={() => setOpenFaq(isOpen ? null : faq.q)}
+                    className="w-full flex items-center justify-between p-5 text-left"
+                  >
+                    <span className="font-semibold text-navy-dark pr-4">{faq.q}</span>
+                    <ChevronDown
+                      size={18}
+                      className={`text-muted-foreground flex-shrink-0 transition-transform ${
+                        isOpen ? "rotate-180" : ""
+                      }`}
+                    />
+                  </button>
+                  <AnimatePresence>
+                    {isOpen && (
+                      <motion.div
+                        initial={{ height: 0, opacity: 0 }}
+                        animate={{ height: "auto", opacity: 1 }}
+                        exit={{ height: 0, opacity: 0 }}
+                        transition={{ duration: 0.2 }}
+                        className="overflow-hidden"
+                      >
+                        <p className="px-5 pb-5 text-muted-foreground leading-relaxed">
+                          {faq.a}
+                        </p>
+                      </motion.div>
+                    )}
+                  </AnimatePresence>
+                </div>
+              );
+            })}
+          </div>
+
+          {/* Bottom CTA */}
+          <div className="text-center mt-12">
+            <p className="text-muted-foreground mb-4">Still have questions?</p>
+            <button className="inline-flex items-center gap-2 bg-primary hover:bg-primary-dark text-primary-foreground font-semibold px-6 py-3 rounded-lg transition-colors">
+              Contact Us <ArrowRight size={16} />
+            </button>
           </div>
         </div>
       </div>
-      <Footer />
-    </div>
+    </Layout>
   );
 };
 
