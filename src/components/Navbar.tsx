@@ -2,6 +2,7 @@ import { useState, useEffect, useRef, useCallback } from "react";
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import { Menu, X, Compass, ChevronDown, Map, Route, Info } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
+import LoginModal from "./LoginModal";
 
 const planYourTripItems = [
   {
@@ -40,6 +41,7 @@ const Navbar = () => {
   const [mobileOpen, setMobileOpen] = useState(false);
   const [dropdownOpen, setDropdownOpen] = useState(false);
   const [mobileDropdownOpen, setMobileDropdownOpen] = useState(false);
+  const [loginModalOpen, setLoginModalOpen] = useState(false);
   const dropdownTimeout = useRef<ReturnType<typeof setTimeout>>();
   const navigate = useNavigate();
   const location = useLocation();
@@ -171,7 +173,10 @@ const Navbar = () => {
 
           {/* Right actions */}
           <div className="hidden lg:flex items-center gap-3">
-            <button className="text-sm font-medium text-foreground/80 hover:text-primary transition-colors px-4 py-2">
+            <button
+              onClick={() => setLoginModalOpen(true)}
+              className="text-sm font-medium text-foreground/80 hover:text-primary transition-colors px-4 py-2"
+            >
               Login
             </button>
             <button className="bg-primary hover:bg-primary-dark text-primary-foreground font-semibold text-sm px-5 py-2.5 rounded-lg transition-colors">
@@ -266,7 +271,10 @@ const Navbar = () => {
                 </motion.div>
               ))}
               <hr className="w-24 border-primary-foreground/20 my-2" />
-              <button className="text-lg text-primary-foreground/80 hover:text-primary transition-colors">
+              <button
+                onClick={() => { setMobileOpen(false); setLoginModalOpen(true); }}
+                className="text-lg text-primary-foreground/80 hover:text-primary transition-colors"
+              >
                 Login
               </button>
               <button className="bg-primary hover:bg-primary-dark text-primary-foreground font-semibold text-lg px-8 py-3 rounded-lg transition-colors mt-2">
@@ -276,6 +284,8 @@ const Navbar = () => {
           </motion.div>
         )}
       </AnimatePresence>
+
+      <LoginModal open={loginModalOpen} onClose={() => setLoginModalOpen(false)} />
     </>
   );
 };
