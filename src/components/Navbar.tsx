@@ -2,6 +2,7 @@ import { useState, useEffect, useRef, useCallback } from "react";
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import { Menu, X, Compass, ChevronDown, Map, Route, Info } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
+import LoginModal from "./LoginModal";
 
 const planYourTripItems = [
   {
