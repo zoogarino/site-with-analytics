@@ -1,22 +1,16 @@
-import { useState } from "react";
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Switch } from "@/components/ui/switch";
-import { Checkbox } from "@/components/ui/checkbox";
-import { Mail, CheckCircle, Lock } from "lucide-react";
+import { Mail, CheckCircle, Lock, MapPin, Car, Building, Compass } from "lucide-react";
 import { useToast } from "@/hooks/use-toast";
 
-const EmailTab = () => {
-  const { toast } = useToast();
-  const [subscribed, setSubscribed] = useState(true);
+interface EmailTabProps {
+  isSubscribed: boolean;
+  onToggleSubscription: () => void;
+}
 
-  const topics = [
-    { id: "destinations", label: "Destination Guides", desc: "In-depth guides to Namibia's regions and attractions" },
-    { id: "selfdrive", label: "Self-Drive Tips", desc: "Practical advice for navigating Namibia's roads" },
-    { id: "accommodation", label: "Accommodation Reviews", desc: "Honest reviews of lodges, camps, and hotels" },
-    { id: "activities", label: "Activity Recommendations", desc: "Tours, safaris, and unique experiences" },
-    { id: "planning", label: "Trip Planning Advice", desc: "Itineraries, budgeting, and planning resources" },
-  ];
+const EmailTab = ({ isSubscribed, onToggleSubscription }: EmailTabProps) => {
+  const { toast } = useToast();
 
   return (
     <Card className="border-border">
@@ -25,41 +19,65 @@ const EmailTab = () => {
         <CardDescription>Control what emails you receive from Pocket Guide Namibia</CardDescription>
       </CardHeader>
       <CardContent className="space-y-8">
-        {/* Subscription Status */}
-        <div className="flex items-start gap-4 p-4 rounded-xl bg-primary/5 border border-primary/20">
-          <div className="mt-0.5">
-            <CheckCircle className="h-6 w-6 text-primary" />
-          </div>
-          <div>
-            <p className="font-semibold text-foreground">✅ Subscribed to Pocket Guide Newsletter</p>
-            <p className="text-sm text-muted-foreground">You'll receive our curated travel guides twice per month.</p>
-          </div>
-        </div>
-
-        {/* Topic Preferences */}
+        {/* Newsletter Section */}
         <div className="space-y-4">
-          <div>
-            <h3 className="font-semibold text-foreground">Customize Your Content</h3>
-            <p className="text-sm text-muted-foreground">Tell us what topics interest you</p>
-          </div>
-          <div className="space-y-3">
-            {topics.map(t => (
-              <label key={t.id} className="flex items-start gap-3 p-3 rounded-lg border border-border hover:bg-accent/50 transition cursor-pointer">
-                <Checkbox defaultChecked className="mt-0.5" />
+          {isSubscribed ? (
+            <>
+              <div className="flex items-start gap-4 p-4 rounded-xl bg-primary/5 border border-primary/20">
+                <CheckCircle className="h-6 w-6 text-primary mt-0.5 shrink-0" />
                 <div>
-                  <p className="font-medium text-foreground">{t.label}</p>
-                  <p className="text-sm text-muted-foreground">{t.desc}</p>
+                  <p className="font-semibold text-foreground">Subscribed to Pocket Guide Newsletter</p>
+                  <p className="text-sm text-muted-foreground mt-1">You'll receive our curated travel guides twice per month</p>
+                  <div className="mt-3">
+                    <p className="text-sm font-medium text-foreground mb-2">What you'll receive:</p>
+                    <ul className="space-y-1.5 text-sm text-muted-foreground">
+                      <li className="flex items-center gap-2"><MapPin className="h-3.5 w-3.5 text-primary" /> Destination highlights and itineraries</li>
+                      <li className="flex items-center gap-2"><Car className="h-3.5 w-3.5 text-primary" /> Self-drive tips and road advice</li>
+                      <li className="flex items-center gap-2"><Building className="h-3.5 w-3.5 text-primary" /> Accommodation and activity recommendations</li>
+                      <li className="flex items-center gap-2"><Compass className="h-3.5 w-3.5 text-primary" /> Trip planning resources</li>
+                    </ul>
+                  </div>
                 </div>
-              </label>
-            ))}
-          </div>
-          <Button
-            variant="ghost"
-            className="text-destructive hover:text-destructive/80"
-            onClick={() => toast({ title: "Unsubscribed", description: "You've been removed from the newsletter." })}
-          >
-            <Mail className="h-4 w-4 mr-2" /> Unsubscribe from Newsletter
-          </Button>
+              </div>
+              <Button
+                variant="ghost"
+                className="text-destructive hover:text-destructive/80"
+                onClick={() => {
+                  onToggleSubscription();
+                  toast({ title: "Unsubscribed", description: "You've been removed from the newsletter." });
+                }}
+              >
+                <Mail className="h-4 w-4 mr-2" /> Unsubscribe from Newsletter
+              </Button>
+            </>
+          ) : (
+            <div className="p-6 rounded-xl border border-border bg-accent/30 text-center">
+              <Mail className="h-12 w-12 text-muted-foreground mx-auto mb-3" />
+              <p className="font-semibold text-foreground text-lg">Not Subscribed to Newsletter</p>
+              <p className="text-sm text-muted-foreground mt-2 max-w-md mx-auto">
+                Join thousands of travelers getting curated Namibia travel guides, tips, and inspiration delivered twice per month.
+              </p>
+              <div className="mt-4 text-left max-w-xs mx-auto">
+                <p className="text-sm font-medium text-foreground mb-2">You'll receive:</p>
+                <ul className="space-y-1.5 text-sm text-muted-foreground">
+                  <li className="flex items-center gap-2"><MapPin className="h-3.5 w-3.5 text-primary" /> Destination highlights and detailed itineraries</li>
+                  <li className="flex items-center gap-2"><Car className="h-3.5 w-3.5 text-primary" /> Expert self-drive tips and road condition updates</li>
+                  <li className="flex items-center gap-2"><Building className="h-3.5 w-3.5 text-primary" /> Curated accommodation and activity recommendations</li>
+                  <li className="flex items-center gap-2"><Compass className="h-3.5 w-3.5 text-primary" /> Trip planning resources and insider advice</li>
+                </ul>
+              </div>
+              <Button
+                className="mt-5 bg-primary hover:bg-primary/90 text-primary-foreground"
+                onClick={() => {
+                  onToggleSubscription();
+                  toast({ title: "Subscribed!", description: "Welcome to the Pocket Guide Newsletter." });
+                }}
+              >
+                Subscribe to Newsletter
+              </Button>
+              <p className="text-xs text-muted-foreground mt-3">Delivered twice per month • Unsubscribe anytime</p>
+            </div>
+          )}
         </div>
 
         {/* Marketing Emails */}
