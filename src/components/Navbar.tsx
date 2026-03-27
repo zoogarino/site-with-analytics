@@ -284,6 +284,8 @@ const Navbar = () => {
           </motion.div>
         )}
       </AnimatePresence>
+
+      <LoginModal open={loginModalOpen} onClose={() => setLoginModalOpen(false)} />
     </>
   );
 };
