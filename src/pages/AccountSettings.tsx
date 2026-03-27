@@ -1,10 +1,9 @@
 import { useState } from "react";
 import Layout from "@/components/Layout";
-import { Tabs, TabsList, TabsTrigger, TabsContent } from "@/components/ui/tabs";
 import { Card } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Avatar, AvatarFallback } from "@/components/ui/avatar";
-import { User, Mail, Bell, Shield, Lock } from "lucide-react";
+import { User, Mail, Bell, Shield, Lock, Settings } from "lucide-react";
 import { motion } from "framer-motion";
 import ProfileTab from "@/components/account/ProfileTab";
 import EmailTab from "@/components/account/EmailTab";
@@ -21,10 +20,12 @@ const mockUserData = {
   dateOfBirth: "1990-01-15",
   title: "Mr.",
   isLoggedIn: true,
+  isNewsletterSubscribed: true,
 };
 
 const AccountSettings = () => {
   const [mockUser, setMockUser] = useState(mockUserData);
+  const [activeTab, setActiveTab] = useState("profile");
 
   if (!mockUser.isLoggedIn) {
     return (
@@ -43,6 +44,13 @@ const AccountSettings = () => {
       </Layout>
     );
   }
+
+  const tabs = [
+    { id: "profile", label: "Profile", icon: User },
+    { id: "email", label: "Email Preferences", icon: Mail },
+    { id: "notifications", label: "Notifications", icon: Bell },
+    { id: "privacy", label: "Privacy & Data", icon: Shield },
+  ];
 
   return (
     <Layout>
@@ -66,23 +74,72 @@ const AccountSettings = () => {
           </div>
         </div>
 
-        {/* Tabs */}
+        {/* Main Content */}
         <div className="section-container">
-          <Tabs defaultValue="profile" className="flex flex-col lg:flex-row gap-8">
-            <TabsList className="flex lg:flex-col h-auto bg-card border border-border rounded-xl p-2 lg:w-64 shrink-0">
-              <TabsTrigger value="profile" className="justify-start gap-2 w-full data-[state=active]:bg-accent"><User className="h-4 w-4" /> Profile</TabsTrigger>
-              <TabsTrigger value="email" className="justify-start gap-2 w-full data-[state=active]:bg-accent"><Mail className="h-4 w-4" /> Email Preferences</TabsTrigger>
-              <TabsTrigger value="notifications" className="justify-start gap-2 w-full data-[state=active]:bg-accent"><Bell className="h-4 w-4" /> Notifications</TabsTrigger>
-              <TabsTrigger value="privacy" className="justify-start gap-2 w-full data-[state=active]:bg-accent"><Shield className="h-4 w-4" /> Privacy & Data</TabsTrigger>
-            </TabsList>
+          <div className="flex flex-col lg:flex-row gap-8">
 
-            <div className="flex-1 min-w-0">
-              <TabsContent value="profile"><ProfileTab user={mockUser} /></TabsContent>
-              <TabsContent value="email"><EmailTab /></TabsContent>
-              <TabsContent value="notifications"><NotificationsTab /></TabsContent>
-              <TabsContent value="privacy"><PrivacyTab /></TabsContent>
+            {/* Mobile Tab Selector */}
+            <div className="lg:hidden">
+              <select
+                value={activeTab}
+                onChange={(e) => setActiveTab(e.target.value)}
+                className="w-full px-4 py-3 bg-card border-2 border-border rounded-xl focus:outline-none focus:border-primary font-semibold text-foreground"
+              >
+                <option value="profile">📋 Profile Information</option>
+                <option value="email">✉️ Email Preferences</option>
+                <option value="notifications">🔔 Notifications</option>
+                <option value="privacy">🔒 Privacy & Data</option>
+              </select>
             </div>
-          </Tabs>
+
+            {/* Sidebar Navigation - Desktop */}
+            <div className="hidden lg:block w-64 shrink-0">
+              <div className="bg-card border border-border rounded-xl p-4 sticky top-24">
+                {/* Sidebar Header */}
+                <div className="flex items-center gap-2 px-4 pb-4 mb-2 border-b border-border">
+                  <Settings className="h-5 w-5 text-primary" />
+                  <h3 className="font-semibold text-foreground">Settings</h3>
+                </div>
+
+                {/* Navigation Buttons */}
+                <nav className="space-y-1">
+                  {tabs.map((tab) => {
+                    const Icon = tab.icon;
+                    return (
+                      <button
+                        key={tab.id}
+                        onClick={() => setActiveTab(tab.id)}
+                        className={`w-full flex items-center gap-3 px-4 py-3 rounded-lg text-left transition ${
+                          activeTab === tab.id
+                            ? "bg-primary/10 text-primary font-semibold"
+                            : "text-muted-foreground hover:bg-accent/50"
+                        }`}
+                      >
+                        <Icon className="h-4 w-4" />
+                        {tab.label}
+                      </button>
+                    );
+                  })}
+                </nav>
+              </div>
+            </div>
+
+            {/* Main Content Area */}
+            <div className="flex-1 min-w-0">
+              {activeTab === "profile" && <ProfileTab user={mockUser} />}
+              {activeTab === "email" && (
+                <EmailTab
+                  isSubscribed={mockUser.isNewsletterSubscribed}
+                  onToggleSubscription={() =>
+                    setMockUser({ ...mockUser, isNewsletterSubscribed: !mockUser.isNewsletterSubscribed })
+                  }
+                />
+              )}
+              {activeTab === "notifications" && <NotificationsTab />}
+              {activeTab === "privacy" && <PrivacyTab />}
+            </div>
+
+          </div>
         </div>
       </motion.div>
     </Layout>
